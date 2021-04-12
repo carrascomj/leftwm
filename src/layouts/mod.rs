@@ -8,6 +8,7 @@ mod center_main_balanced;
 mod even_horizontal;
 mod even_vertical;
 mod fibonacci;
+mod full;
 mod grid_horizontal;
 mod main_and_deck;
 mod main_and_horizontal_stack;
@@ -29,9 +30,10 @@ pub enum Layout {
     Monocle,
     RightWiderLeftStack,
     LeftWiderRightStack,
+    Full,
 }
 
-pub const LAYOUTS: [Layout; 12] = [
+pub const LAYOUTS: [Layout; 13] = [
     Layout::MainAndVertStack,
     Layout::MainAndHorizontalStack,
     Layout::MainAndDeck,
@@ -44,6 +46,7 @@ pub const LAYOUTS: [Layout; 12] = [
     Layout::Monocle,
     Layout::RightWiderLeftStack,
     Layout::LeftWiderRightStack,
+    Layout::Full,
 ];
 
 // This is tedious, but simple and effective.
@@ -69,6 +72,7 @@ impl Layout {
             Self::CenterMainBalanced => center_main_balanced::update(workspace, windows),
             Self::Monocle => monocle::update(workspace, windows),
             Self::RightWiderLeftStack => right_main_and_vert_stack::update(workspace, windows),
+            Self::Full => full::update(workspace, windows),
         }
     }
 

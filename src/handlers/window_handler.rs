@@ -66,22 +66,22 @@ pub fn created(mut manager: &mut Manager, mut window: Window, x: i32, y: i32) ->
     window.update_for_theme(&manager.theme_setting);
 
     //Dirty
-    if (Layout::Monocle == layout || Layout::MainAndDeck == layout)
-        && window.type_ == WindowType::Normal
-    {
-        let for_active_workspace = |x: &Window| -> bool {
-            helpers::intersect(&window.tags, &x.tags) && x.type_ != WindowType::Dock
-        };
+    match layout {
+        Layout::Monocle | Layout::MainAndDeck | Layout::Full
+            if window.type_ == WindowType::Normal =>
+        {
+            let for_active_workspace = |x: &Window| -> bool {
+                helpers::intersect(&window.tags, &x.tags) && x.type_ != WindowType::Dock
+            };
 
-        let mut to_reorder = helpers::vec_extract(&mut manager.windows, for_active_workspace);
-        if Layout::Monocle == layout {
-            to_reorder.insert(0, window.clone());
-        } else {
-            to_reorder.insert(1, window.clone());
+            let mut to_reorder = helpers::vec_extract(&mut manager.windows, for_active_workspace);
+            match layout {
+                Layout::Monocle | Layout::Full => to_reorder.insert(0, window.clone()),
+                _ => to_reorder.insert(1, window.clone()),
+            }
+            manager.windows.append(&mut to_reorder)
         }
-        manager.windows.append(&mut to_reorder);
-    } else {
-        manager.windows.push(window.clone());
+        _ => manager.windows.push(window.clone()),
     }
 
     //let the DS know we are managing this window

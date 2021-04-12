@@ -148,6 +148,23 @@ impl Workspace {
     }
 
     #[must_use]
+    pub(crate) fn full_x(&self) -> i32 {
+        self.xyhw.x()
+    }
+    #[must_use]
+    pub(crate) fn full_y(&self) -> i32 {
+        self.xyhw.y()
+    }
+    #[must_use]
+    pub(crate) fn full_height(&self) -> i32 {
+        self.xyhw.h()
+    }
+    #[must_use]
+    pub(crate) fn full_width(&self) -> i32 {
+        self.xyhw.w()
+    }
+
+    #[must_use]
     pub fn x(&self) -> i32 {
         self.xyhw_avoided.x()
     }
