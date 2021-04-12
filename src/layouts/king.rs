@@ -1,8 +1,38 @@
 use crate::models::Window;
 use crate::models::Workspace;
 
-/// Layout which splits the workspace into two columns, gives one window all of the left column,
-/// and divides the right column among all the other windows.
+/// Layout which splits the workspace into two columns but keeps the main 
+/// window over the columns, like a King sat in the throne.
+/// 1 window
+/// ```text
+/// +-----------------------+
+/// |                       |
+/// |                       |
+/// |           1           |
+/// |                       |
+/// |                       |
+/// +-----------------------+
+/// ```
+/// 2 windows
+/// ```text
+/// +-----------+-----------+
+/// |           |           |
+/// |      +----+-----+     |
+/// |   2  |    1     |     |
+/// |      +----+-----+     |
+/// |           |           |
+/// +-----------+-----------+
+/// ```
+/// 3 windows
+/// ```text
+/// +-----------+-----------+
+/// |           |           |
+/// |      +----+-----+     |
+/// |   2  |    1     |  3  |
+/// |      +----+-----+     |
+/// |           |           |
+/// +-----------+-----------+
+/// ```
 pub fn update(workspace: &Workspace, windows: &mut Vec<&mut Window>) {
     let window_count = windows.len();
     if window_count == 0 {
